@@ -9,7 +9,7 @@
             <h5 class="card-title">{{ $project->name }}</h5>
             <p class="card-text">{{ $project->description }}</p>
             <p class="card-text">Anno di realizzazione: {{ $project->release_year }}</p>
-            <p class="card-text">Tipo di progetto: {{ $project->type_id }}</p>
+            <p class="card-text">Tipo di progetto: {{ $project->type->name }}</p>
             <a href="{{ $project->site_url }}">Vai al sito</a>
         </div>
     </div>

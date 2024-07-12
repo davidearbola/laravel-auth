@@ -14,4 +14,9 @@ class Type extends Model
         'description',
         'icon'
     ];
+
+    public function project()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

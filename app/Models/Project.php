@@ -17,4 +17,9 @@ class Project extends Model
         'site_url',
         'thumb_path',
     ];
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }

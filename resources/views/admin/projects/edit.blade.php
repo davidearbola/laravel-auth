@@ -67,6 +67,23 @@
                     @enderror
                 </div>
             </div>
+            <div class="mb-4 row">
+                <label for="thumb_project" class="col-md-2 col-form-label text-md-right">Type</label>
+                <div class="col-md-10">
+                    <select name="type_id" class="form-select @error('type_id') is-invalid @enderror" required autofocus>
+                        <option value="" selected>Scelta del type</option>
+                        @foreach ($types as $type)
+                            <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>
+                                {{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('type_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>
     </div>
