@@ -3,7 +3,7 @@
 @section('content')
     <div class="py-3">
         <h4>Modifica il progetto: {{ $project->name }}</h4>
-        <form method="POST" action="{{ route('admin.projects.edit', $project->id) }}">
+        <form method="POST" action="{{ route('admin.projects.update', $project->id) }}">
             @csrf
             @method('PUT')
             <div class="mb-4 row">
