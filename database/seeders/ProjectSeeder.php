@@ -19,6 +19,7 @@ class ProjectSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $newProject = new Project();
             $newProject->name = $faker->sentence(2);
+            $newProject->type_id = $faker->numberBetween(1, 4);
             $newProject->description = $faker->sentence(20);
             $newProject->release_year = $faker->year($max = 'now');
             $newProject->site_url = $faker->sentence(10);
