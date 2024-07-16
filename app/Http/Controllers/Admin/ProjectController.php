@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -14,11 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projectList = Project::all();
-        $data = [
-            'projects' => $projectList,
-        ];
-        return view('admin.projects.index', $data);
+        $projects = Project::with('languages')->get();
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -27,8 +25,10 @@ class ProjectController extends Controller
     public function create()
     {
         $typeList = Type::all();
+        $languagesList = Language::all();
         $data = [
-            'types' => $typeList
+            'types' => $typeList,
+            'languages' => $languagesList
         ];
         return view('admin.projects.create', $data);
     }
@@ -45,11 +45,17 @@ class ProjectController extends Controller
             'site_url' => 'required',
             'thumb_path' => 'required',
             'type_id' => 'required',
+            'languages' => 'array',
+            'languages.*' => 'exists:languages,id',
         ]);
 
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
+
+        if (isset($data['languages'])) {
+            $newProject->languages()->attach($data['languages']);
+        }
 
         return redirect()->route('admin.projects.show', $newProject);
     }
@@ -71,9 +77,11 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $typeList = Type::all();
+        $languagesList = Language::all();
         $data = [
             'project' => $project,
-            'types' => $typeList
+            'types' => $typeList,
+            'languages' => $languagesList
         ];
         return view('admin.projects.edit', $data);
     }
@@ -89,9 +97,16 @@ class ProjectController extends Controller
             'release_year' => 'required',
             'site_url' => 'required',
             'thumb_path' => 'required',
+            'type_id' => 'required',
+            'languages' => 'array',
+            'languages.*' => 'exists:languages,id',
         ]);
 
         $project->update($data);
+        if (isset($data['languages'])) {
+            $project->languages()->sync($data['languages']);
+        }
+
         return redirect()->route('admin.projects.show', $project);
     }
 

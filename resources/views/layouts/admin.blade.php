@@ -46,31 +46,78 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.projects.index' ? 'bg-secondary' : '' }}"
-                                    href="{{ route('admin.projects.index') }}">
-                                    <i class="fa-solid fa-rectangle-list"></i> Lista Progetti
+                                <a class="nav-link text-white {{ Str::startsWith(Route::currentRouteName(), 'admin.projects.') ? 'bg-secondary' : '' }}"
+                                    data-bs-toggle="collapse" href="#projectMenu" role="button" aria-expanded="false"
+                                    aria-controls="projectMenu">
+                                    <i class="fa-solid fa-folder-open"></i> Progetti
+                                    <i class="fa-solid fa-chevron-right chevron"></i>
                                 </a>
+                                <div class="collapse" id="projectMenu">
+                                    <ul class="list-unstyled ps-3">
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.projects.index') }}">
+                                                <i class="fa-solid fa-rectangle-list"></i> Lista Progetti
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.projects.create') }}">
+                                                <i class="fa-solid fa-plus"></i> Aggiungi Progetto
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.projects.create' ? 'bg-secondary' : '' }}"
-                                    href="{{ route('admin.projects.create') }}">
-                                    <i class="fa-solid fa-plus"></i> Aggiungi Progetto
+                                <a class="nav-link text-white {{ Str::startsWith(Route::currentRouteName(), 'admin.types.') ? 'bg-secondary' : '' }}"
+                                    data-bs-toggle="collapse" href="#typeMenu" role="button" aria-expanded="false"
+                                    aria-controls="typeMenu">
+                                    <i class="fa-solid fa-folder-open"></i> Type
+                                    <i class="fa-solid fa-chevron-right chevron"></i>
                                 </a>
+                                <div class="collapse" id="typeMenu">
+                                    <ul class="list-unstyled ps-3">
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.types.index') }}">
+                                                <i class="fa-solid fa-rectangle-list"></i> Lista Type
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.types.create') }}">
+                                                <i class="fa-solid fa-plus"></i> Aggiungi Type
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.types.index' ? 'bg-secondary' : '' }}"
-                                    href="{{ route('admin.types.index') }}">
-                                    <i class="fa-solid fa-rectangle-list"></i> Lista types
+                                <a class="nav-link text-white {{ Str::startsWith(Route::currentRouteName(), 'admin.languages.') ? 'bg-secondary' : '' }}"
+                                    data-bs-toggle="collapse" href="#languageMenu" role="button" aria-expanded="false"
+                                    aria-controls="languageMenu">
+                                    <i class="fa-solid fa-folder-open"></i> Linguaggi
+                                    <i class="fa-solid fa-chevron-right chevron"></i>
                                 </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.types.create' ? 'bg-secondary' : '' }}"
-                                    href="{{ route('admin.types.create') }}">
-                                    <i class="fa-solid fa-plus"></i> Aggiungi type
-                                </a>
+                                <div class="collapse" id="languageMenu">
+                                    <ul class="list-unstyled ps-3">
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.languages.index') }}">
+                                                <i class="fa-solid fa-rectangle-list"></i> Lista Linguaggi
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a style="font-size: 12px" class="nav-link text-white fst-italic "
+                                                href="{{ route('admin.languages.create') }}">
+                                                <i class="fa-solid fa-plus"></i> Aggiungi Linguaggio
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
 
                             <li class="nav-item">
@@ -78,7 +125,8 @@
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa-solid fa-sign-out-alt fa-lg fa-fw"></i> {{ __('Logout') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </li>

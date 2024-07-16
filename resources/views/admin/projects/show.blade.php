@@ -9,8 +9,12 @@
             <h5 class="card-title">{{ $project->name }}</h5>
             <p class="card-text">{{ $project->description }}</p>
             <p class="card-text">Anno di realizzazione: {{ $project->release_year }}</p>
-            <p class="card-text">Tipo di progetto: {{ $project->type->name }}</p>
-            <a href="{{ $project->site_url }}">Vai al sito</a>
+            <p class="card-text">Tipo di progetto: {{ $project->type->name }} <i class="{{ $project->type->icon }}"></i></p>
+            <p class="card-text">Linguaggi utilizzati:</p>
+            @foreach ($project->languages as $language)
+                <i class="{{ $language->icon }}"></i>
+            @endforeach
+            <p><a href="{{ $project->site_url }}">Vai al sito</a></p>
         </div>
     </div>
     <div class="mt-2 d-flex">

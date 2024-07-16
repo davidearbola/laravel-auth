@@ -1,29 +1,50 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="d-flex flex-wrap py-3">
-        @foreach ($projects as $project)
-            <div class="card w-25">
-                <div class="card-body">
-                    <img src="{{ $project->thumb_path }}" class="card-img-top">
-                    <h5 class="card-title">{{ $project->name }}</h5>
-                    <p class="card-text">{{ $project->description }}</p>
-                    <p class="card-text">Anno di realizzazione: {{ $project->release_year }}</p>
-                    <p class="card-text">Tipo di progetto: {{ $project->type->name }}</p>
-                    <a href="{{ $project->site_url }}">Vai al sito</a>
-                    <div class="mt-2 d-flex">
-                        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning me-2">Edit</a>
-                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input class="btn btn-danger" type="submit" value="Delete"></input>
-                        </form>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('admin.projects.show', $project->id) }}" class="card-text">Dettaglio</a>
-                </div>
-            </div>
-        @endforeach
+    <div class="py-3">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Link</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @foreach ($projects as $project)
+                    <tr>
+                        <td><img style="width: 2rem" src="{{ $project->thumb_path }}"></td>
+                        <td>{{ $project->name }}</td>
+                        <td>{{ $project->type->name }} <i class="{{ $project->type->icon }}"></i></td>
+                        <td>
+                            @foreach ($project->languages as $language)
+                                <i class="{{ $language->icon }}"></i>
+                            @endforeach
+                        </td>
+                        <td><a href="{{ $project->site_url }}">Vai al sito</a></td>
+                        <td>
+                            <a class="text-decoration-none text-dark btn p-0"
+                                href="{{ route('admin.projects.show', $project) }}">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
+                            <a class="text-decoration-none text-warning btn px-2 py-0"
+                                href="{{ route('admin.projects.edit', $project) }}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <form class="d-inline" action="{{ route('admin.projects.destroy', $project) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-link p-0 text-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection

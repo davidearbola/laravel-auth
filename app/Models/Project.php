@@ -22,4 +22,9 @@ class Project extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'project_language');
+    }
 }
