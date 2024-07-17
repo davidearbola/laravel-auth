@@ -16,7 +16,14 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with('languages')->get();
-        return view('admin.projects.index', compact('projects'));
+        $typesList = Type::all();
+        $languagesList = Language::all();
+        $data = [
+            'projects' => $projects,
+            'types' => $typesList,
+            'languages' => $languagesList
+        ];
+        return view('admin.projects.index', $data);
     }
 
     /**
