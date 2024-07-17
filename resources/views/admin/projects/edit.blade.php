@@ -3,7 +3,7 @@
 @section('content')
     <div class="py-3">
         <h4>Modifica il progetto: {{ $project->name }}</h4>
-        <form method="POST" action="{{ route('admin.projects.update', $project->id) }}">
+        <form method="POST" action="{{ route('admin.projects.update', $project->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-4 row">
@@ -55,11 +55,23 @@
                     @enderror
                 </div>
             </div>
-            <div class="mb-4 row">
+            {{-- <div class="mb-4 row">
                 <label for="thumb_project" class="col-md-2 col-form-label text-md-right">Thumb</label>
                 <div class="col-md-10">
                     <input id="thumb_project" type="text" class="form-control @error('thumb_path') is-invalid @enderror"
                         name="thumb_path" value="{{ old('thumb_path', $project->thumb_path) }}" required autofocus>
+                    @error('thumb_path')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div> --}}
+            <div class="mb-4 row">
+                <label for="thumb_project" class="col-md-2 col-form-label text-md-right">Thumb</label>
+                <div class="col-md-10">
+                    <input id="thumb_project" type="file" class="form-control @error('thumb_path') is-invalid @enderror"
+                        name="thumb_path">
                     @error('thumb_path')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

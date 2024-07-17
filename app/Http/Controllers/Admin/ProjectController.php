@@ -7,6 +7,8 @@ use App\Models\Language;
 use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -50,11 +52,18 @@ class ProjectController extends Controller
             'description' => 'required',
             'release_year' => 'required',
             'site_url' => 'required',
-            'thumb_path' => 'required',
+            'thumb_path' => 'image',
             'type_id' => 'required',
             'languages' => 'array',
             'languages.*' => 'exists:languages,id',
         ]);
+
+        if ($request->has('thumb_path')) {
+            // save the image
+
+            $thumb_path = Storage::put('uploads', $request->thumb_path);
+            $data['thumb_path'] = $thumb_path;
+        }
 
         $newProject = new Project();
         $newProject->fill($data);
@@ -103,11 +112,23 @@ class ProjectController extends Controller
             'description' => 'required',
             'release_year' => 'required',
             'site_url' => 'required',
-            'thumb_path' => 'required',
+            'thumb_path' => 'image',
             'type_id' => 'required',
             'languages' => 'array',
             'languages.*' => 'exists:languages,id',
         ]);
+
+        if ($request->has('thumb_path')) {
+            // save the image
+
+            $thumb_path = Storage::put('uploads', $request->thumb_path);
+            $data['thumb_path'] = $thumb_path;
+
+            if ($project->thumb_path && !Str::start($project->thumb_path, 'http')) {
+                // not null and not startingn with http
+                Storage::delete($project->thumb_path);
+            }
+        }
 
         $project->update($data);
         if (isset($data['languages'])) {
@@ -122,6 +143,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->thumb_path && !Str::start($project->thumb_path, 'http')) {
+            // not null and not startingn with http
+            Storage::delete($project->thumb_path);
+        }
         $project->delete();
         return redirect()->route('admin.projects.index');
     }

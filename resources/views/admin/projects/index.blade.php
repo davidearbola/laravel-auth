@@ -17,7 +17,13 @@
                 <tbody class="table-group-divider">
                     @foreach ($projects as $project)
                         <tr>
-                            <td><img style="width: 2rem" src="{{ $project->thumb_path }}"></td>
+                            <td>
+                                @if (Str::startsWith($project->thumb_path, 'http'))
+                                    <img style="width: 2rem" src="{{ $project->thumb_path }}">
+                                @else
+                                    <img style="width: 2rem" src="{{ asset('storage/' . $project->thumb_path) }}">
+                                @endif
+                            </td>
                             <td>{{ $project->name }}</td>
                             <td>{{ $project->type->name }} <i class="{{ $project->type->icon }}"></i></td>
                             <td>

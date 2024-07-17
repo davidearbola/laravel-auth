@@ -3,7 +3,11 @@
 @section('content')
     <div class="row py-3">
         <div class="col-4">
-            <img class="w-100" src="{{ $project->thumb_path }}">
+            @if (Str::startsWith($project->thumb_path, 'http'))
+                <img class="w-100" src="{{ $project->thumb_path }}">
+            @else
+                <img class="w-100" src="{{ asset('storage/' . $project->thumb_path) }}">
+            @endif
         </div>
         <div class="col-8">
             <h5 class="card-title">{{ $project->name }}</h5>
