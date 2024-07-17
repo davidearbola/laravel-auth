@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             TypeSeeder::class,
+            LanguageSeeder::class,
             ProjectSeeder::class,
-            LanguageSeeder::class
         ]);
     }
 }

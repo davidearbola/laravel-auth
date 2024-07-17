@@ -94,10 +94,12 @@ class ProjectController extends Controller
     {
         $typeList = Type::all();
         $languagesList = Language::all();
+        $projectLanguages = $project->languages->pluck('id')->toArray();
         $data = [
             'project' => $project,
             'types' => $typeList,
-            'languages' => $languagesList
+            'languages' => $languagesList,
+            'projectLanguages' => $projectLanguages
         ];
         return view('admin.projects.edit', $data);
     }
@@ -124,7 +126,7 @@ class ProjectController extends Controller
             $thumb_path = Storage::put('uploads', $request->thumb_path);
             $data['thumb_path'] = $thumb_path;
 
-            if ($project->thumb_path && !Str::start($project->thumb_path, 'http')) {
+            if ($project->thumb_path && !Str::startsWith($project->thumb_path, 'http')) {
                 // not null and not startingn with http
                 Storage::delete($project->thumb_path);
             }
@@ -143,7 +145,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if ($project->thumb_path && !Str::start($project->thumb_path, 'http')) {
+        if ($project->thumb_path && !Str::startsWith($project->thumb_path, 'http')) {
             // not null and not startingn with http
             Storage::delete($project->thumb_path);
         }

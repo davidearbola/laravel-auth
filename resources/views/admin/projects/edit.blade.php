@@ -102,7 +102,7 @@
                     @foreach ($languages as $language)
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="languages[]" value="{{ $language->id }}"
-                                id="language{{ $language->id }}">
+                                id="language{{ $language->id }}" @checked(in_array($language->id, old('languages', $projectLanguages)))>
                             <label class="form-check-label" for="language{{ $language->id }}">
                                 {{ $language->name }}
                             </label>
