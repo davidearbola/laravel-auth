@@ -12,7 +12,16 @@ class ProjectController extends Controller
     {
         return response()->json([
             'success' => true,
-            'projects' => Project::with(['type', 'languages'])->orderByDesc('id')->paginate()
+            'projects' => Project::with(['type', 'languages'])->orderByDesc('id')->paginate(3)
+        ]);
+    }
+
+    public function show($id)
+    {
+        $project = Project::with(['type', 'languages'])->findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'project' => $project
         ]);
     }
 }
