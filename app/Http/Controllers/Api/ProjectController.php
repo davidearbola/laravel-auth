@@ -31,4 +31,12 @@ class ProjectController extends Controller
             ]);
         }
     }
+
+    public function latest()
+    {
+        return response()->json([
+            'success' => true,
+            'projects' =>  Project::with(['type', 'languages'])->orderByDesc('id')->take(3)->get()
+        ]);
+    }
 }
