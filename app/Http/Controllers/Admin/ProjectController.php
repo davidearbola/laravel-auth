@@ -58,6 +58,8 @@ class ProjectController extends Controller
             'languages.*' => 'exists:languages,id',
         ]);
 
+        $data['slug'] = Str::slug($request->name, '-');
+
         if ($request->has('thumb_path')) {
             // save the image
 
@@ -119,6 +121,8 @@ class ProjectController extends Controller
             'languages' => 'array',
             'languages.*' => 'exists:languages,id',
         ]);
+
+        $data['slug'] = Str::slug($request->name, '-');
 
         if ($request->has('thumb_path')) {
             // save the image
