@@ -22,6 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/mailable', function () {
+    $lead = ['name' => 'Davide', 'email' => 'davide@example.com', 'message' => 'Lorem picsum dolor message'];
+    // $lead = App\Models\Lead::first();
+    return new App\Mail\NewLeadMarkdownMessage($lead);
+});
+
 Route::middleware(['auth'])
     ->prefix('admin') //definisce il prefisso "admin/" per le rotte di questo gruppo
     ->name('admin.') //definisce il pattern con cui generare i nomi delle rotte cioè "admin.qualcosa"
